@@ -11,6 +11,7 @@
     작성자 : ${obj.brd_writer}<br>
     조회수 : ${obj.brd_hit}<br>
     날짜 : ${obj.brd_date}<br>
+    이미지 : <img src="${PageContext.request.contextPath}/board/imgview?no=${obj.brd_no}" width="100px" height="100px">
     <hr>
     <a href="${pageContext.request.contextPath}/board/list">글목록</a>
     <c:if test="${prev ne 0}">

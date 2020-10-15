@@ -19,4 +19,5 @@ public class MemberVO {
 	private String userphone = null;
 	private int userage = 0;
 	private String userdate = null;
+	private byte[] userimg = null;
 }

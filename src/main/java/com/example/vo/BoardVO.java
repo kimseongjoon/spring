@@ -15,4 +15,5 @@ public class BoardVO {
     private String brd_date = null;
     private String brd_userid = null;
     private String brd_writer = null;
+    private byte[] brd_img = null;
 }

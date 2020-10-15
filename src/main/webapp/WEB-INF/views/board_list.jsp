@@ -7,6 +7,15 @@
 <body>
     <a href="${pageContext.request.contextPath}/board/write">글쓰기</a>
     <hr>
+    <form action="" method="get">
+        <select name="field" size="1">
+            <option value="subject">제 목
+            <option value="writer">작성자
+        </select>
+        <input type="text" name="txt">
+        <input type="hidden" name="page" value="1">
+        <input type="submit" value="검색">
+    </form>
     <table>
         <tr>
             <th>글번호</th>
@@ -24,7 +33,9 @@
                 <td>${tmp.brd_date}</td>
             </tr>
         </c:forEach>
-
     </table>
+    <c:forEach var="i" begin="1" end="${cnt}">
+        <a href="${pageContext.request.contextPath}/board/list?page=${i}">${i} </a>
+    </c:forEach>
 </body>
 </html>
