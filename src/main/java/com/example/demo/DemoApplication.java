@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-@ComponentScan({"com.example.controller"})
+@ComponentScan({"com.example.controller", "com.example.restcontroller"})
 @MapperScan({"com.example.mapper"})
 public class DemoApplication {
 

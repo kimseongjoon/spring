@@ -3,8 +3,13 @@ package com.example.mapper;
 import com.example.vo.MemberVO;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface MemberMapper {
+    @Select({"SELECT * FROM membertbl"})
+    List<MemberVO> memberList();
+
     @Insert({"INSERT INTO MEMBERTBL(USERID, USERPW, USERNAME, USERPHONE, USERAGE, USERDATE, USERIMG) VALUES(#{mem.userid}, #{mem.userpw}, #{mem.username}, #{mem.userphone}, #{mem.userage}, SYSDATE, #{mem.userimg})"})
     public int memberJoin(@Param("mem") MemberVO mem);
 
@@ -13,4 +18,32 @@ public interface MemberMapper {
 
     @Select({"SELECT USERIMG FROM MEMBERTBL WHERE USERID=#{id}"})
     MemberVO memberImg(@Param("id") String id);
+
+    @Select({"SELECT count(*) FROM membertbl WHERE userid=#{id}"})
+    int isMember(@Param("id") String id);
+
+    @Insert({
+            "<script>",
+            "INSERT ALL",
+                "<foreach collection='list' item='obj' separator=' '>",
+                    "INTO MEMBERTBL(USERID, USERPW, USERNAME, USERPHONE, USERAGE, USERDATE)",
+                    "VALUES (#{obj.userid}, #{obj.userpw}, #{obj.username}, #{obj.userphone}, #{obj.userage}, SYSDATE)",
+                "</foreach>",
+            "SELECT * FROM DUAL",
+            "</script>"
+    })
+    int memberBatchInsert(@Param("list") List<MemberVO> list);
+
+
+    @Delete({
+            "<script>",
+            "DELETE FROM membertbl WHERE userid IN(",
+                "<foreach collection='array' item='tmp' separator=', '>",
+                    "#{tmp}",
+                "</foreach>",
+            ")",
+            "</script>"
+    })
+    public int memberBatchDelete(@Param("array") String[] array);
+
 }

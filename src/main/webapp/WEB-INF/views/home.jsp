@@ -17,5 +17,6 @@
 		<a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
 	</c:if>
 	<a href="${pageContext.request.contextPath}/board/list">게시판</a>
+	<a href="${pageContext.request.contextPath}/admin/home">관리자</a>
 </body>
 </html>

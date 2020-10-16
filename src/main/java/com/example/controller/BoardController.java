@@ -78,6 +78,15 @@ public class BoardController {
         return "board_list";
     }
 
+
+
+    @RequestMapping(value = "/list1", method = RequestMethod.GET)
+    public String list1(Model model) {
+        int cnt = mMapper.boardCount("");
+        model.addAttribute("cnt", (cnt - 1) / 10 + 1);
+        return "board_list1";
+    }
+
     @RequestMapping(value = "/content", method = RequestMethod.GET)
     public String content(HttpServletRequest request, HttpSession httpSession, @RequestParam(value = "no", defaultValue = "0") int no, Model model) {
         if (no == 0) {

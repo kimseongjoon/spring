@@ -15,7 +15,7 @@ public interface BoardMapper {
 
 //    @Select({"SELECT BRD_NO, BRD_TITLE, BRD_HIT, BRD_DATE, BRD_WRITER FROM BOARDTBL ORDER BY BRD_NO DESC"})
     @Select({"SELECT * " +
-            "FROM (SELECT brd_no, brd_title, brd_hit, brd_date, brd_writer, row_number() over (ORDER BY brd_no DESC) rown " +
+            "FROM (SELECT brd_no, brd_title, brd_content, brd_hit, brd_date, brd_writer, row_number() over (ORDER BY brd_no DESC) rown " +
                     "FROM boardtbl " +
                     "WHERE brd_title LIKE '%' || #{txt} || '%' ) b1 " +
             "WHERE rown BETWEEN #{start} AND #{end}"})
@@ -23,6 +23,9 @@ public interface BoardMapper {
 
     @Select({"SELECT BRD_NO, BRD_TITLE, BRD_CONTENT, BRD_HIT, BRD_DATE, BRD_WRITER FROM BOARDTBL WHERE BRD_NO=#{no}"})
     BoardVO boardOne(@Param("no") int no);
+
+    @Select({"SELECT BRD_NO, BRD_TITLE, BRD_CONTENT, BRD_HIT, BRD_DATE, BRD_WRITER FROM BOARDTBL WHERE BRD_NO=#{no}"})
+    BoardVO boardOne1(@Param("no") int no);
 
     @Update({"UPDATE BOARDTBL SET BRD_HIT=BRD_HIT+1 WHERE BRD_NO=#{no}"})
     int boardUpdateHit(@Param("no") int no); // INSERT, UPDATE, DELETE => int
