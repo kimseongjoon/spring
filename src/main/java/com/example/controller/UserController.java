@@ -63,5 +63,4 @@ public class UserController {
         userMapper.deleteUser(id);
         System.out.println("유저 삭제, 성공적");
     }
-
 }

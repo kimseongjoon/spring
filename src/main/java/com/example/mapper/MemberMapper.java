@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.example.vo.MemberVO;
 import org.apache.ibatis.annotations.*;
+import sun.security.x509.CertAttrSet;
 
 import java.util.List;
 
@@ -9,6 +10,17 @@ import java.util.List;
 public interface MemberMapper {
     @Select({"SELECT * FROM membertbl"})
     List<MemberVO> memberList();
+
+    @Select({
+            "<script>",
+            "SELECT * FROM membertbl WHERE userid IN (",
+                "<foreach collection='chk' item='id' separator=', '>",
+                    "#{id}",
+                "</foreach>",
+            ")",
+            "</script>"
+    })
+    List<MemberVO> memberListByIds(@Param("chk") String[] chk);
 
     @Insert({"INSERT INTO MEMBERTBL(USERID, USERPW, USERNAME, USERPHONE, USERAGE, USERDATE, USERIMG) VALUES(#{mem.userid}, #{mem.userpw}, #{mem.username}, #{mem.userphone}, #{mem.userage}, SYSDATE, #{mem.userimg})"})
     public int memberJoin(@Param("mem") MemberVO mem);
@@ -44,6 +56,39 @@ public interface MemberMapper {
             ")",
             "</script>"
     })
-    public int memberBatchDelete(@Param("array") String[] array);
+    int memberBatchDelete(@Param("array") String[] array);
+
+    @Update({
+            "<script>",
+            "UPDATE membertbl SET",
+                "userpw = (CASE",
+                    "<foreach collection='ids' item='tmp' separator=' '>",
+                        "WHEN userid=#{tmp.userid} THEN #{tmp.userpw}",
+                    "</foreach>",
+                "END),",
+                "username = (CASE",
+                    "<foreach collection='ids' item='tmp' separator=' '>",
+                        "WHEN userid=#{tmp.userid} THEN #{tmp.username}",
+                    "</foreach>",
+                "END),",
+                "userphone = (CASE",
+                    "<foreach collection='ids' item='tmp' separator=' '>",
+                        "WHEN userid=#{tmp.userid} THEN #{tmp.userphone}",
+                    "</foreach>",
+                "END),",
+                "userage = (CASE",
+                    "<foreach collection='ids' item='tmp' separator=' '>",
+                        "WHEN userid=#{tmp.userid} THEN #{tmp.userage}",
+                    "</foreach>",
+                "END)",
+            "WHERE userid IN (",
+                "<foreach collection='ids' item='tmp' separator=', '>",
+                    "#{tmp.userid}",
+                "</foreach>",
+                ")",
+            "</script>"
+    })
+    void memberBatchUpdate(@Param("ids") List<MemberVO> list);
+
 
 }
