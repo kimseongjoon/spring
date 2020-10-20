@@ -45,4 +45,9 @@ public class SecurityController {
     public String login(HttpServletRequest request, Model model) {
         return "security_login";
     }
+
+    @RequestMapping(value = "/page403", method = RequestMethod.GET)
+    public String page403(HttpServletRequest request, Model model) {
+        return "security_page403";
+    }
 }

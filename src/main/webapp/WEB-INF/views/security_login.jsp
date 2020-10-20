@@ -4,7 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/home">홈으로</a>
+<a href="${pageContext.request.contextPath}/security/home">홈으로</a>
 <form action="${pageContext.request.contextPath}/security/loginProcess" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     아이디 : <input type="text" name="username"> <br>
