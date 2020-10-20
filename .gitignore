@@ -33,3 +33,4 @@ build/
 .vscode/
 /lib/
 /.mvn/wrapper/
+/src/main/java/Main.java

@@ -47,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .usernameParameter("username")
                 .passwordParameter("passwd")
                 .permitAll()
-                .defaultSuccessUrl("/security/home").and()
+                //.defaultSuccessUrl("/security/home") <=페이지 고정
+                .successHandler(new CustomLoginSuccessHandler())
+                .and()
 
                 .logout().logoutUrl("/security/logout")
                 .logoutSuccessUrl("/security/home")

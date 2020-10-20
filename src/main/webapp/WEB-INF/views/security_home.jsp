@@ -15,10 +15,10 @@
     </security:authorize>
 
     <security:authorize access="isAuthenticated()">
-        OBJECT : <security:authentication property="principal.username" var="user"/>
-        ${user}<hr/>
-        ROLE : <security:authentication property="authorities" /><br/>
-        USERNAME : <security:authentication property="name"/>님 환영합니다.<br/>
+        <security:authentication property="principal.username" var="user"/> <hr/>
+        ROLE : <security:authentication property="authorities"/><br/>
+        이름 : <security:authentication property="principal.name"/><br/>
+        아이디 : <security:authentication property="name"/>님 환영합니다.<br/>
 
         <security:authorize access="hasAuthority('ADMIN')">
             관리자입니다.
@@ -35,6 +35,8 @@
             <input type="submit" value="로그아웃">
         </form>
     </security:authorize>
+
+
 
 </body>
 </html>

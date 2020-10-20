@@ -32,6 +32,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 //        Member1Vo member1Vo = member1Mapper.memberLogin(username);
         Member2Vo member1Vo  = member1Repository.findByUsername(username);
 
+        if (member1Vo == null) {
+            return null;
+        }
+
         String[] strRoles = { member1Vo.getRole() }; // 가져온 권한정보를 문자열 배열로 만들기
                     //     = {"ADMIN", "MANAGER", "GENERAL"};
 
@@ -39,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Collection<GrantedAuthority> roles = AuthorityUtils.createAuthorityList(strRoles);
 
         // 사용자 객체 넘기기 (아이디, 암호, 권한들)
-        return new User(member1Vo.getUsername(), member1Vo.getPassword(), roles);
+        return new SecurityUser(member1Vo.getUsername(), member1Vo.getPassword(), member1Vo.getName(), roles);
 
         //세션처리까지 완료됨
     }
