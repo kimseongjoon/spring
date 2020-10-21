@@ -30,6 +30,7 @@
             사용자입니다.
         </security:authorize>
 
+<%--    security사용시 get 사용x    --%>
         <form action="${PageContext.request.contextPath}/security/logout" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="submit" value="로그아웃">

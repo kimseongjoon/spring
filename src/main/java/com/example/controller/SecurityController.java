@@ -4,6 +4,7 @@ import com.example.mapper.Member1Mapper;
 import com.example.security.SecurityUser;
 import com.example.vo.Member1Vo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

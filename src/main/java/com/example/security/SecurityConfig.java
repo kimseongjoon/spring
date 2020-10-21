@@ -48,17 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("passwd")
                 .permitAll()
                 //.defaultSuccessUrl("/security/home") <=페이지 고정
-                .successHandler(new CustomLoginSuccessHandler())
+                .successHandler(new CustomLoginSuccessHandler()) // 로그인 성공시 핸들러 호출됨
                 .and()
 
                 .logout().logoutUrl("/security/logout")
-                .logoutSuccessUrl("/security/home")
+//                .logoutSuccessUrl("/security/home")
+                .logoutSuccessHandler(new CustomLogoutSuccessHandler())
                 .invalidateHttpSession(true)
-                .clearAuthentication(true)
+                .clearAuthentication(true) // 세션 클리어
                 .permitAll().and()
 
                 .exceptionHandling().accessDeniedPage("/security/page403");
 
-                //http.csrf().disable();
+                http.csrf().disable();
     }
 }
