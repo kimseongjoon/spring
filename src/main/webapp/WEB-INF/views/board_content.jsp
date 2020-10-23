@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+dvsvmsdlkmdkmvsl
     글번호 : ${obj.brd_no}<br>
     글제목 : ${obj.brd_title}<br>
     글내용 : ${obj.brd_content}<br>

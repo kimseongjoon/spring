@@ -1,6 +1,8 @@
 package com.example.repository;
 
 import com.example.entity.Item;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ItemRepository extends CrudRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>{
+
+    // SELECT * FROM itemtbl WHERE itmno =:no
+    Item findAllByItmno(long no);
+
+    // SELECT COUNT(*) FROM itemtbl WHERE itmname LIKE '%' || '사과' || '%'
+    long countByItmnameIgnoreCaseContaining(String itmname);
+
+    // SELECT * FROM ITEMTBL WHERE itmname LIKE '%' || '사과' || '%'
+    // ORDER BY itmno ASC
+    List<Item> findAllByItmnameIgnoreCaseContainingOrderByItmnoAsc(String itmname, Pageable pageable);
+
     List<Item> findAllByOrderByItmnoDesc();
 
     @Query(value = "SELECT * FROM itemtbl ORDER BY itmno DESC", nativeQuery = true)

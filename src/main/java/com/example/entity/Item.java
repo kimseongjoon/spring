@@ -2,6 +2,7 @@ package com.example.entity;
 
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class Item {
   private String itmname;
   private String itmcontent;
   private String itmprice;
-  @CreationTimestamp
+  @UpdateTimestamp
   private java.sql.Date itmdate;
 
   public long getItmno() {

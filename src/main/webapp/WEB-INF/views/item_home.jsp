@@ -4,7 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="${PageContext.request.contextPath}/jpa/item_insert.do">물품등록</a> <br/>
+<a href="${PageContext.request.contextPath}/jpa/item_insert.do">물품등록</a>
 <a href="${PageContext.request.contextPath}/jpa/item_select.do">물품목록</a> <br/>
 <hr/>
 홈화면
