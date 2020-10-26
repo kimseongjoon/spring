@@ -16,24 +16,26 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 @ComponentScan({"com.example.controller",
-				"com.example.restcontroller",
-				"com.example.security"})
+        "com.example.restcontroller",
+        "com.example.security",
+        "com.example.interceptor",})
 @EntityScan({"com.example.vo",
-				"com.example.entity"})
+        "com.example.entity"})
 @MapperScan({"com.example.mapper"})
-@EnableJpaRepositories(basePackages={"com.example.repository"})
+
+@EnableJpaRepositories(basePackages = {"com.example.repository"})
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	private ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
-	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-		sqlSessionFactoryBean.setDataSource(dataSource);
-		return  sqlSessionFactoryBean.getObject();
-	}
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        return sqlSessionFactoryBean.getObject();
+    }
 }

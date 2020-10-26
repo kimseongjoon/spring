@@ -3,22 +3,19 @@ package com.example.controller;
 import com.example.entity.Item;
 import com.example.entity.ItemImg;
 import com.example.repository.ItemImgRepository;
-import com.example.repository.ItemQueryRepository;
 import com.example.repository.ItemRepository;
-import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +32,9 @@ public class JPAController {
 
     @Autowired
     ItemImgRepository imgRepository;
+
+    @Autowired
+    EntityManagerFactory emf;
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String home() {
@@ -166,5 +166,67 @@ public class JPAController {
         imgRepository.deleteById(no);
 
         return "redirect:" + request.getContextPath() + "/jpa/item_detail.do?itmno=" + itmno;
+    }
+
+    @RequestMapping(value = "item_insert_batch.do", method = RequestMethod.POST)
+    public String insertbatchpost(HttpServletRequest request, Model model,
+                                  @RequestParam("names[]") String[] names,
+                                  @RequestParam("contents[]") String[] contents,
+                                  @RequestParam("prices[]") String[] prices) {
+
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        String sql = "INSERT INTO itemtbl(itmno, itmname, itmcontent, itmprice, itmdate) values(seq_item_itmno.nextval, :name, :content, :price, sysdate)";
+        for (int i = 0; i < names.length; i++) {
+            em.createNativeQuery(sql)
+                    .setParameter("name", names[i])
+                    .setParameter("content", contents[i])
+                    .setParameter("price", prices[i])
+                    .executeUpdate();
+        }
+        em.getTransaction().commit();
+
+        em.close();
+
+        return "redirect:" + request.getContextPath() + "/jpa/item_insert_batch.do";
+    }
+
+    @RequestMapping(value = "item_update_batch.do", method = RequestMethod.POST)
+    public String updatebatchpost(HttpServletRequest request, Model model,
+                                  @RequestParam("ids[]") String[] ids,
+                                  @RequestParam("names[]") String[] names,
+                                  @RequestParam("contents[]") String[] contents,
+                                  @RequestParam("prices[]") String[] prices) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+//        String sql = "INSERT INTO itemtbl(itmno, itmname, itmcontent, itmprice, itmdate) values(seq_item_itmno.nextval, :name, :content, :price, sysdate)";
+        String sql = "UPDATE itemtbl SET itmname = :name, itmcontent = :content, itmprice = :price WHERE itmno = :no";
+        for (int i = 0; i < ids.length; i++) {
+            em.createNativeQuery(sql)
+                    .setParameter("name", names[i])
+                    .setParameter("content", contents[i])
+                    .setParameter("price", prices[i])
+                    .setParameter("no", ids[i])
+                    .executeUpdate();
+        }
+        em.getTransaction().commit();
+
+        em.close();
+
+        return "redirect:" + request.getContextPath() + "/jpa/item_select.do";
+    }
+
+    @RequestMapping(value = "item_insert_batch.do", method = RequestMethod.GET)
+    public String insertbatchget(HttpServletRequest request, Model model) {
+        return "item_insert_batch";
+    }
+
+    @RequestMapping(value = "item_update_batch.do", method = RequestMethod.GET)
+    public String updatebatchget(HttpServletRequest request, Model model,
+                                 @RequestParam("ids[]") Long[] ids) {
+        List<Item> list = itemRepository.findAllById(Arrays.asList(ids));
+
+        model.addAttribute("list", list);
+        return "item_update_batch";
     }
 }

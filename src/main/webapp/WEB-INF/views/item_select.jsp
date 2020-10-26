@@ -11,6 +11,7 @@
         <input type="text" name="name" placeholder="검색할 물품명을 입력"/>
         <input type="submit" value="검색"/>
     </form>
+    <form action="${pageContext.request.contextPath}/jpa/item_update_batch.do">
     <table>
         <tr>
             <th>물품번호</th>
@@ -22,6 +23,7 @@
         </tr>
         <c:forEach items="${list}" var="tmp">
             <tr>
+                <td><input type="checkbox" value="${tmp.itmno}" name="ids[]"/></td>
                 <td class="no"><a href="${pageContext.request.contextPath}/jpa/item_detail.do?itmno=${tmp.itmno}">${tmp.itmno}</a></td>
                 <td>${tmp.itmname}</td>
                 <td>${tmp.itmcontent}</td>
@@ -37,17 +39,7 @@
     <c:forEach var="i" begin="1" end="${tot}" step="1">
         <a href="${pageContext.request.contextPath}/jpa/item_select.do?page=${i}&name=${param.name}">${i}</a>
     </c:forEach>
-
-
-    <form action="${pageContext.request.contextPath}/jpa/item_search.do" name="search" method="get">
-        <td align="center">
-            <select name="field" size="1">
-                <option value="subject">물품명
-                <option value="writer">작성자
-            </select>
-            <input type="text" size="16" name="word">
-            <input type="submit" value="검색">
-        </td>
+    <input type="submit" value="일괄수정"/>
     </form>
 
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
