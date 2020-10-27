@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter @Setter @ToString @EqualsAndHashCode
@@ -15,7 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "membertbl")
 // 아이디, 암호 이름, 전화번호, 나이, 가입일자
-public class Member {
+public class Member implements Serializable {
 	@Id
 	private String userid = null;
 	private String userpw = null;

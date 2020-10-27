@@ -1,9 +1,12 @@
 package com.example.redis;
 
+import com.example.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 @Service
 public class RedisUserMapper {
@@ -15,10 +18,14 @@ public class RedisUserMapper {
         obj.set(key, value);
     }
 
-    public String getUser(String key) {
+    public Member getUser(String key) {
         ValueOperations<String, Object> obj = redisTemplate.opsForValue();
-        String value = (String) obj.get(key);
+        Member value = (Member) obj.get(key);
 
         return value;
+    }
+
+    public void delUser(String key) {
+        redisTemplate.delete(key);
     }
 }
