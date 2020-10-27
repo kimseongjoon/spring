@@ -23,8 +23,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/jpa/home/**");
-
-
+                .excludePathPatterns("/jpa/home/**", "/rest/**", "/error/**");
+//                .excludePathPatterns("/jpa/home/**");
     }
 }
