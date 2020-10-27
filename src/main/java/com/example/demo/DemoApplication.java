@@ -15,10 +15,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-@ComponentScan({"com.example.controller",
+@ComponentScan({
+        "com.example.redis",
+        "com.example.controller",
         "com.example.restcontroller",
         "com.example.security",
-        "com.example.interceptor",})
+        "com.example.interceptor"})
 @EntityScan({"com.example.vo",
         "com.example.entity"})
 @MapperScan({"com.example.mapper"})
